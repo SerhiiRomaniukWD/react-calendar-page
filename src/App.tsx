@@ -1,9 +1,10 @@
-import { FC } from 'react';
-
+import React, { FC } from 'react';
 
 const App: FC = () => {
   return (
-    <h1>CALENDAR</h1>
+    <div className="title">
+      <h1>CALENDAR</h1>
+    </div>
   );
 };
 
