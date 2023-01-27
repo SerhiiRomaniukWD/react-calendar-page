@@ -1,9 +1,15 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { Calendar } from './components/Calendar';
+import { Header } from './components/Header';
 
 const App: FC = () => {
   return (
-    <div className="title">
-      <h1>CALENDAR</h1>
+    <div className="main">
+      <div className="container">
+        <Header />
+
+        <Calendar />
+      </div>
     </div>
   );
 };
