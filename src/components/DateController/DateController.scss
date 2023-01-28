@@ -1,0 +1,14 @@
+.date-controller {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  font-size: 26px;
+
+  &_text {
+    display: flex;
+    justify-content: center;
+
+    width: 220px;
+  }
+}

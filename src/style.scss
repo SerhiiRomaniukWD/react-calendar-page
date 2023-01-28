@@ -1,0 +1,27 @@
+* {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+}
+
+body {
+  background-color: rgb(154, 186, 163);
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  padding-top: 15px;
+
+  width: 1445px;
+}
+
+@import './components/DateNavigator/DateNavigator.scss';
+@import './components/CreateButton/CreateButton.scss';
+@import './components/Calendar/Calendar.scss';
+@import './components/CalendarItem/CalendarItem.scss';
+@import './components/DateController/DateController.scss';
+@import './components/DateInput/DateInput.scss';
+@import './components/Arrow/Arrow.scss';

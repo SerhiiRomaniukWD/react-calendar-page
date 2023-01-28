@@ -1,0 +1,12 @@
+.date-navigator {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 15px;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
