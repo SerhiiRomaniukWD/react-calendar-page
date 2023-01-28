@@ -1,5 +1,16 @@
 export const dateNormalString = (date: Date) => {
-  return date.toISOString().split('T')[0];
+  const dateResult = date.toISOString().split('T')[0]
+    .split('-').map((elem, index) => {
+      if (index === 2 && +elem < 10) {
+        return `0${elem + 1}`;
+      } else if (index === 2) {
+        return +elem + 1;
+      }
+
+      return elem;
+    });
+
+  return dateResult.join('-');
 };
 
 export const getDate = () => {

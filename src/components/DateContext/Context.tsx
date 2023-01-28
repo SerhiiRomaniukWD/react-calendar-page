@@ -1,16 +1,19 @@
 import { 
   FC, 
   useState, 
-  createContext 
+  createContext, 
+  useEffect
 } from "react";
 import { DateConfig } from "../../types/DateConfig";
 
 export const DateContext = createContext<DateConfig>({
   date: new Date(),
+  isFormVisible: false,
   handleSetDate: () => {},
   increaseMonth: () => {},
   reduceMonth: () => {},
-  handleSetDay: () => {}
+  handleSetDay: () => {},
+  handleSetFormVisible: () => {}
 });
 
 type Props = {
@@ -19,6 +22,11 @@ type Props = {
 
 export const Context: FC<Props> = ({ children }) => {
   const [date, setDate] = useState(new Date());
+  const [isFormVisible, setIsFormVisible] = useState(true);
+
+  const handleSetFormVisible = (value: boolean) => {
+    setIsFormVisible(value);
+  };
 
   const handleSetDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDate(new Date(event.target.value));
@@ -42,12 +50,18 @@ export const Context: FC<Props> = ({ children }) => {
     setDate(newDate);
   };
 
+  useEffect(() => {
+    setIsFormVisible(false);
+  }, [date]);
+
   const value = {
     date,
+    isFormVisible,
     handleSetDate,
     increaseMonth,
     reduceMonth,
-    handleSetDay
+    handleSetDay,
+    handleSetFormVisible
   };
 
   return (

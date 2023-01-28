@@ -1,8 +1,13 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { DateContext } from '../DateContext/Context';
 
 export const CreateButton: FC = () => {
+  const {
+    handleSetFormVisible
+  } = useContext(DateContext);
+
   return (
-    <button className="create-button">
+    <button onClick={() => handleSetFormVisible(true)} className="create-button">
       +
     </button>
   );

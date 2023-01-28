@@ -1,0 +1,85 @@
+.event-form {
+  position: absolute;
+
+  width: 300px;
+  padding: 15px;
+
+  background-color: rgb(255, 255, 255);
+
+  border-radius: 2%;
+  outline: 6px solid rgb(86, 153, 105);
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_title {
+    border: 0;
+
+    &--h3 {
+      font-weight: 500;
+    }
+  }
+
+  &_item {
+    padding: 5px;
+
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    &:nth-last-child(2) {
+      margin-bottom: 60px;
+    }
+
+    &--underline {
+      border-bottom: 1px solid gray;
+    }
+
+    &--date {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &_text-area {
+    border: 0;
+    resize: none;
+
+    font-size: 16px;
+  }
+
+  &_date {
+    border: 0;
+  }
+
+  &_button {
+    width: 20px;
+    height: 20px;
+
+    &--save {
+      display: flex;
+      flex-direction: row-reverse;
+    }
+  }
+
+  &_button-item {
+    background-color: white;
+
+    border-radius: 15%;
+  }
+
+  &_legend {
+    font-size: 10px;
+    color: gray;
+  }
+
+  &_time-box {
+    height: 35px;
+  }
+
+  &_time {
+    border: 0;
+  } 
+}
