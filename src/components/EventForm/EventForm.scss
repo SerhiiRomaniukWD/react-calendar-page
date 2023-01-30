@@ -1,6 +1,10 @@
 .event-form {
   position: absolute;
 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   width: 300px;
   padding: 15px;
 
@@ -8,6 +12,8 @@
 
   border-radius: 2%;
   outline: 6px solid rgb(86, 153, 105);
+
+  z-index: 1;
 
   &_header {
     display: flex;
@@ -41,6 +47,11 @@
       display: flex;
       justify-content: space-between;
     }
+
+    &--description {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   &_text-area {
@@ -54,20 +65,31 @@
     border: 0;
   }
 
-  &_button {
-    width: 20px;
-    height: 20px;
+  &_bottom {
+    display: flex;
+    justify-content: space-between;
+  }
 
-    &--save {
-      display: flex;
-      flex-direction: row-reverse;
-    }
+  &_create-date {
+    padding-top: 24px;
+
+    font-size: 8px;
+    color: gray;
+  }
+
+  &_button-box {
+    display: flex;
+    gap: 10px;
   }
 
   &_button-item {
     background-color: white;
 
-    border-radius: 15%;
+    font-size: 24px;
+
+    border: none;
+
+    cursor: pointer;
   }
 
   &_legend {

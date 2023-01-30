@@ -3,7 +3,8 @@ import { CalendarItem } from '../CalendarItem';
 import { DateContext } from '../DateContext/Context';
 import { v4 as uuidv4 } from 'uuid';
 import { getFullDaysTemplate } from '../../utils/date/dateFuncs';
-import { CreateEventForm } from '../CreateEventForm';
+import { EventForm } from '../EventForm';
+import classNames from 'classnames';
 
 export const Calendar: FC = () => {
   const {
@@ -17,11 +18,13 @@ export const Calendar: FC = () => {
   
   return (
     <div className="calendar">
-      <div className="calendar_box">
-        {isFormVisible && (
-          <CreateEventForm />
-        )}
+      {isFormVisible && (
+        <EventForm />
+      )}
 
+      <div className={classNames('calendar_box', {
+        'calendar_box--blur': isFormVisible
+      })}>
         {fullDaysTemplate.map(day => (
           <CalendarItem 
             day={day} 

@@ -3,6 +3,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+
+    &--blur {
+      filter: blur(5px);
+      z-index: -1;
+    }
   }
 
   padding-bottom: 50px;
