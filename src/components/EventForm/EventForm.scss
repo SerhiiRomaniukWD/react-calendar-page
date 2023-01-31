@@ -61,17 +61,8 @@
     font-size: 16px;
   }
 
-  &_date {
-    border: 0;
-  }
-
-  &_bottom {
-    display: flex;
-    justify-content: space-between;
-  }
-
   &_create-date {
-    padding-top: 24px;
+    padding-top: 20px;
 
     font-size: 8px;
     color: gray;
@@ -80,16 +71,6 @@
   &_button-box {
     display: flex;
     gap: 10px;
-  }
-
-  &_button-item {
-    background-color: white;
-
-    font-size: 24px;
-
-    border: none;
-
-    cursor: pointer;
   }
 
   &_legend {
@@ -101,7 +82,12 @@
     height: 35px;
   }
 
-  &_time {
+  &--border-off {
     border: 0;
   } 
+
+  &_footer {
+    display: flex;
+    justify-content: space-between;
+  }
 }

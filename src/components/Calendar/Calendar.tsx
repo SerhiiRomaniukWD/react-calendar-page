@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 import { CalendarItem } from '../CalendarItem';
 import { DateContext } from '../DateContext/Context';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,16 +6,14 @@ import { getFullDaysTemplate } from '../../utils/date/dateFuncs';
 import { EventForm } from '../EventForm';
 import classNames from 'classnames';
 
-export const Calendar: FC = () => {
+export const Calendar: FC = memo(() => {
   const {
     date,
     handleSetDay,
     isFormVisible
   } = useContext(DateContext);
-
   const fullDaysTemplate = getFullDaysTemplate(date);
 
-  
   return (
     <div className="calendar">
       {isFormVisible && (
@@ -24,7 +22,8 @@ export const Calendar: FC = () => {
 
       <div className={classNames('calendar_box', {
         'calendar_box--blur': isFormVisible
-      })}>
+        })}
+      >
         {fullDaysTemplate.map(day => (
           <CalendarItem 
             day={day} 
@@ -36,4 +35,4 @@ export const Calendar: FC = () => {
       </div>
     </div>
   );
-};
+});

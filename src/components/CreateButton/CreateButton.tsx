@@ -1,14 +1,12 @@
-import { FC, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 import { DateContext } from '../DateContext/Context';
 
-export const CreateButton: FC = () => {
-  const {
-    handleSetFormVisible
-  } = useContext(DateContext);
+export const CreateButton: FC = memo(() => {
+  const action = useContext(DateContext).handleSetFormVisible;
 
   return (
-    <button onClick={() => handleSetFormVisible(true)} className="create-button">
-      +
+    <button onClick={action} className="create-button">
+      ➕
     </button>
   );
-};
+});

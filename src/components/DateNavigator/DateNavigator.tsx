@@ -1,11 +1,11 @@
-import { FC, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 import { CreateButton } from '../CreateButton';
 import { DateContext } from '../DateContext/Context';
 import { DateController } from '../DateController';
 import { DateInput } from '../DateInput';
 
 
-export const DateNavigator: FC = () => {
+export const DateNavigator: FC = memo(() => {
   const {
     date,
     increaseMonth,
@@ -28,4 +28,4 @@ export const DateNavigator: FC = () => {
       </div>
     </div>
   );
-};
+});

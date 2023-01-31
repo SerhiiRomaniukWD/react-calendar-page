@@ -1,61 +1,64 @@
-import { FC, useContext, useState } from 'react';
+import { FC, memo, useContext, useState } from 'react';
+import { ButtonType } from '../../types/ButtonType';
+import { Event } from '../../types/Event';
 import { dateNormalString } from '../../utils/date/dateFuncs';
 import { DateContext } from '../DateContext/Context';
+import { FormButton } from '../FormButton';
 
-export const EventForm: FC = () => {
-  const {
-    date,
-    handleSetFormVisible
-  } = useContext(DateContext);
+export const EventForm: FC = memo(() => {
+  const { date, handleSetFormVisible, handleSetDate } = useContext(DateContext);
+  const { Submit, Button } = ButtonType;
 
-  const storage = localStorage.getItem(dateNormalString(date));
-  const event = storage ? JSON.parse(storage) : {};
+  const dateToString = dateNormalString(date);
+  const createDate = `${dateNormalString(new Date())} ${new Date().toTimeString().slice(0, 5)}`;
+  const eventStorage = localStorage.getItem(dateToString);
+  const eventParse = eventStorage 
+    ? JSON.parse(eventStorage) 
+    : {
+        title: '',
+        description: '',
+        time: '',
+        lastWorked: ''
+      };
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState(event.description);
-  const [time, setTime] = useState(event.time);
+  const [event, setEvent] = useState<Event>(eventParse);
   
-  const handleSetTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+  const handleSetTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEvent(prevState => {
+      return {...prevState, title: e.target.value};
+    });
   };
 
-  const handleSetDescription = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(event.target.value);
+  const handleSetDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEvent(prevState => {
+      return {...prevState, description: e.target.value};
+    });
   };
 
-  const handleSetTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(event.target.value);
+  const handleSetTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEvent(prevState => {
+      return {...prevState, time: e.target.value};
+    });
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const lastWorked = `Created at: ${dateNormalString(new Date())} ${new Date().toTimeString().slice(0, 5)}`;
-    const eventForLocalStor = {
-      title,
-      description,
-      time,
-      lastWorked
-    };
-
-    localStorage.setItem(dateNormalString(date), JSON.stringify(eventForLocalStor));
-    handleSetFormVisible(false);
+    const lastWorked = `Created at: ${createDate}`;
+    
+    localStorage.setItem(dateToString, JSON.stringify({...event, lastWorked}));
+    handleSetFormVisible();
   };
 
   const removeEventFromLocalStor = () => {
-    localStorage.removeItem(dateNormalString(date));
-    handleSetFormVisible(false);
+    localStorage.removeItem(dateToString);
+    handleSetFormVisible();
   };
 
-  const updateEventDescription = () => {
-    const lastWorked = `Updated at: ${dateNormalString(new Date())} ${new Date().toTimeString().slice(0, 5)}`;
-    const eventForLocalStor = {
-      ...event, 
-      description,
-      lastWorked
-    };
+  const updateEvent = () => {
+    const lastWorked = `Updated at: ${createDate}`;
 
-    localStorage.setItem(dateNormalString(date), JSON.stringify(eventForLocalStor));
+    localStorage.setItem(dateToString, JSON.stringify({...event, lastWorked}));
   };
   
   return (
@@ -69,12 +72,11 @@ export const EventForm: FC = () => {
           {event.title || 'Add new event'}
         </h3>
 
-        <div className="event-form_item event-form_button">
-          <span
-            className="event-form_button-item" 
-            onClick={() => handleSetFormVisible(false)}
-          >❎</span>
-        </div>
+        <FormButton 
+          value='❎' 
+          type={Button} 
+          action={handleSetFormVisible}
+        />
       </div>
 
       <fieldset className="event-form_item event-form_item--underline">
@@ -83,8 +85,8 @@ export const EventForm: FC = () => {
         <input
           className="event-form_title" 
           type="tegetTime()xt" 
-          placeholder='Title goes here'
-          value={title}
+          placeholder="Title goes here"
+          value={event.title}
           onChange={handleSetTitle}
           required        
         />
@@ -97,18 +99,16 @@ export const EventForm: FC = () => {
           rows={4} 
           cols={20} 
           className="event-form_text-area"
-          value={description}
+          value={event.description}
           onChange={handleSetDescription}
         ></textarea>
 
-        {event.description && (
-          <button 
-            className="event-form_button-item" 
-            type="button"
-            onClick={updateEventDescription}
-          >
-            🔄
-          </button> 
+        {eventParse.description && (
+          <FormButton 
+            value='🔄' 
+            type={Button} 
+            action={updateEvent}
+          />
         )}
       </fieldset>
 
@@ -117,11 +117,14 @@ export const EventForm: FC = () => {
           <legend className="event-form_legend">Date</legend>
 
           <input 
-            className="event-form_date"
+            className="event-form--border-off"
             type="date" 
-            value={dateNormalString(date)} 
+            value={dateToString}
+            onChange={(e) => {
+              handleSetDate(e);
+              handleSetFormVisible();
+            }}
             required 
-            disabled
           />
         </fieldset>
 
@@ -130,37 +133,33 @@ export const EventForm: FC = () => {
 
           <input 
             type="time" 
-            className="event-form_time"
-            value={time}
+            className="event-form--border-off"
+            value={event.time}
             onChange={handleSetTime}
-            />
+          />
         </fieldset>
       </div>
 
-      <div className="event-form_bottom">
+      <div className="event-form_footer">
         <span className="event-form_create-date"> 
           {event.lastWorked}
         </span>
 
         <div className="event-form_button-box">
           {event.title && (
-            <button 
-              className="event-form_button-item" 
-              type="button"
-              onClick={removeEventFromLocalStor}
-            >
-              🗑
-            </button> 
+            <FormButton 
+              value='🚮' 
+              type={Button} 
+              action={removeEventFromLocalStor}
+            />
           )}
 
-          <button 
-            className="event-form_item event-form_button-item" 
-            type='submit'
-          >
-            save
-          </button>
+          <FormButton 
+            value='✅' 
+            type={Submit} 
+          />
         </div>
       </div>
     </form>
   );
-};
+});

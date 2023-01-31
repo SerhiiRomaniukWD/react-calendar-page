@@ -24,8 +24,10 @@ export const Context: FC<Props> = ({ children }) => {
   const [date, setDate] = useState(new Date());
   const [isFormVisible, setIsFormVisible] = useState(true);
 
-  const handleSetFormVisible = (value: boolean) => {
-    setIsFormVisible(value);
+  const handleSetFormVisible = () => {
+    setIsFormVisible((prevState: boolean) => {
+      return !prevState;
+    });
   };
 
   const handleSetDate = (event: React.ChangeEvent<HTMLInputElement>) => {

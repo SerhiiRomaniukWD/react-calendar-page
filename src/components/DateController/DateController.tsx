@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Arrow } from "../Arrow";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   increaseMonth: () => void;
 };
 
-export const DateController: FC<Props> = ({
+export const DateController: FC<Props> = memo(({
   date,
   reduceMonth,
   increaseMonth
@@ -26,4 +26,4 @@ export const DateController: FC<Props> = ({
       <Arrow action={increaseMonth} arrow={'→'}/>
     </div>
   );
-};
+});

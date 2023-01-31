@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC, useContext } from 'react';
+import { FC, memo, useContext } from 'react';
 import { dateNormalString, getDayAbbreviation, getMonthDaysTemplate } from '../../utils/date/dateFuncs';
 import { DateContext } from '../DateContext/Context';
 
@@ -9,12 +9,12 @@ type Props = {
   handleSetDay: (date: Date) => void;
 };
 
-export const CalendarItem: FC<Props> = ({ 
+export const CalendarItem: FC<Props> = memo(({ 
   day, 
   currentDay,
   handleSetDay 
 }) => {
-  const { handleSetFormVisible } = useContext(DateContext);
+  const handleSetFormVisible = useContext(DateContext).handleSetFormVisible;
   const monthDaysTemplate = getMonthDaysTemplate(currentDay);
   const event = localStorage.getItem(dateNormalString(day));
   const title = event ? JSON.parse(event).title : '';
@@ -29,7 +29,7 @@ export const CalendarItem: FC<Props> = ({
         if (e.detail === 1) {
           handleSetDay(day);
         } else if (e.detail === 2) {
-          handleSetFormVisible(true);
+          handleSetFormVisible();
         }
       }}
     >
@@ -42,4 +42,4 @@ export const CalendarItem: FC<Props> = ({
       <p className="calendar-item_title">{title}</p>
     </div>
   );
-};
+});

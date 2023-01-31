@@ -1,11 +1,11 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 type Props = {
   date: Date;
   handleSetDate: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const DateInput: FC<Props> = ({ date, handleSetDate }) => {
+export const DateInput: FC<Props> = memo(({ date, handleSetDate }) => {
   const dateToString = date.toISOString().split('T')[0];
 
   return (
@@ -20,4 +20,4 @@ export const DateInput: FC<Props> = ({ date, handleSetDate }) => {
       />
     </label>
   );
-};
+});
